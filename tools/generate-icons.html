@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PWA Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .icon-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .icon-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn-generate {
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧺 PWA Icon Generator</h1>
+    <p>Klik tombol di bawah untuk download semua icon PWA yang dibutuhkan.</p>
+
+    <button onclick="generateAllIcons()" class="btn-generate">
+        📥 Generate & Download All Icons
+    </button>
+
+    <div class="icon-preview" id="preview"></div>
+
+    <script>
+        const sizes = [16, 32, 72, 96, 120, 128, 144, 152, 180, 192, 384, 512];
+
+        function drawIcon(ctx, size) {
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+
+            // Draw rounded rectangle background
+            const radius = size * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Draw laundry basket icon
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.lineWidth = size * 0.05;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const iconSize = size * 0.5;
+
+            // Basket body
+            ctx.beginPath();
+            ctx.moveTo(centerX - iconSize * 0.4, centerY + iconSize * 0.1);
+            ctx.lineTo(centerX - iconSize * 0.3, centerY + iconSize * 0.4);
+            ctx.quadraticCurveTo(centerX, centerY + iconSize * 0.5, centerX + iconSize * 0.3, centerY + iconSize * 0.4);
+            ctx.lineTo(centerX + iconSize * 0.4, centerY + iconSize * 0.1);
+            ctx.stroke();
+
+            // Steam/wave lines
+            ctx.beginPath();
+            ctx.moveTo(centerX - iconSize * 0.25, centerY - iconSize * 0.1);
+            ctx.quadraticCurveTo(centerX - iconSize * 0.1, centerY - iconSize * 0.3, centerX + iconSize * 0.1, centerY - iconSize * 0.1);
+            ctx.quadraticCurveTo(centerX + iconSize * 0.3, centerY - iconSize * 0.35, centerX + iconSize * 0.35, centerY - iconSize * 0.25);
+            ctx.stroke();
+        }
+
+        function generateAllIcons() {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                drawIcon(ctx, size);
+
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `icon-${size}x${size}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                // Show preview
+                const item = document.createElement('div');
+                item.className = 'icon-item';
+                item.innerHTML = `<canvas width="${Math.min(size, 100)}" height="${Math.min(size, 100)}"></canvas><p>${size}x${size}</p>`;
+                const previewCanvas = item.querySelector('canvas');
+                const previewCtx = previewCanvas.getContext('2d');
+                previewCtx.drawImage(canvas, 0, 0, Math.min(size, 100), Math.min(size, 100));
+                preview.appendChild(item);
+            });
+
+            alert('Semua icon telah didownload! Pindahkan ke folder static/icons/');
+        }
+    </script>
+</body>
+
+</html>
