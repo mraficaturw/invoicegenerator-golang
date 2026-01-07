@@ -2,6 +2,26 @@
 
 Aplikasi pembuatan invoice laundry otomatis dengan fitur kirim ke WhatsApp.
 
+## 📖 Latar Belakang
+
+Project ini dibuat untuk membantu usaha laundry orang tua saya yang masih menggunakan cara manual untuk memberikan informasi kepada pelanggan.
+
+### ❌ Masalah yang Dihadapi
+
+1. **Foto bukti timbangan berulang-ulang** - Setiap pelanggan harus difoto bukti timbangannya, membuat memori HP cepat penuh
+2. **Pertanyaan repetitif dari pelanggan** - Terus menerus menjawab pertanyaan yang sama seperti:
+   - "Kapan selesai?"
+   - "Total berapa?"
+
+### ✅ Solusi
+
+Project ini menyelesaikan masalah tersebut dengan **1 kali input data** yang langsung menghasilkan:
+
+- ✅ Invoice lengkap dengan semua informasi (nama, berat, harga, tanggal selesai)
+- ✅ Langsung dikirim ke WhatsApp pelanggan
+- ✅ Tidak perlu foto bukti timbangan
+- ✅ Pelanggan tidak perlu bertanya lagi karena semua info sudah ada
+
 ## ✨ Fitur
 
 - 📝 Buat invoice laundry otomatis
@@ -237,4 +257,4 @@ Gunakan tool online untuk generate icons dari gambar 512x512:
 
 ---
 
-Made with ❤️ by Enja Laundry
+Made with Rafi Catur
